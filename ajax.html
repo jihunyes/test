@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>API 연습</title>
+</head>
+
+<body>
+
+        
+        <input type="text" id=date>
+
+
+        <input type="button" onclick="getdate();" value="날짜를 입력해주세요">
+    
+        <p id=content> </p>
+
+
+        <script src="https://code.jquery.com/jquery-3.4.1.js"
+                integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
+        <script>
+
+function getdate() {
+                var date;
+                date = $('#date').val();
+                $.ajax({
+                        method: "GET",
+                        url: "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=f5eef3421c602c6cb7ea224104795888&targetDt="+date,
+                })
+                        .done(function (msg) {
+                                alert("Data Saved: " + msg);
+                                for(var i = 1 ; i < 10; i++)
+                                {
+                                        $("#content").append("<div>" +i + "등  "+msg.boxOfficeResult.dailyBoxOfficeList[i].movieNm + "</div>");
+                                }
+                               
+                                // $("#content").append("<strong>" + msg.documents[0].title + "</strong>");
+                                // $("#content").append("<img src='" + msg.documents[0].thumbnail + "'/>");
+                        });
+                }
+        </script>
+
+
+</body>
+
+
+</html>
